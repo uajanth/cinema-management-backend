@@ -7,7 +7,7 @@ const router = express.Router();
 const { Show } = require("../models/show");
 const { Theatre } = require("../models/theatre");
 const { route } = require("./movies");
-var addDays = require("date-fns/addDays");
+const addDays = require("date-fns/addDays");
 
 // Route >> /shows/...
 
