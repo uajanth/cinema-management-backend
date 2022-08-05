@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 // Other Imports
 const movies = require("./controllers/movies");
@@ -17,9 +18,7 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 // Database Connections
-mongoose.connect(
-	`mongodb+srv://admin:ghx0G6KrE6lfMrFR@cluster0.7djwyi2.mongodb.net/?retryWrites=true&w=majority`
-);
+mongoose.connect(process.env.MONGODB_URI);
 
 // Routes
 app.get("/", (req, res) => {
