@@ -1,5 +1,6 @@
 // Package Imports
 const express = require("express");
+const movie = require("../models/movie");
 const router = express.Router();
 
 // Other Imports
@@ -49,6 +50,44 @@ router.get("/id/:id", async (req, res) => {
 	} catch (error) {
 		console.log(error);
 		return res.status(504).json("Unable to retrieve movie from the database.");
+	}
+});
+
+// PUT movie in database
+
+router.put("/id", async (req, res) => {
+	const {
+		id,
+		title,
+		language,
+		cast,
+		director,
+		trailerLink,
+		status,
+		rating,
+		posterLink,
+	} = req.body;
+
+	try {
+		await Movie.findByIdAndUpdate(
+			{ _id: id },
+			{
+				title,
+				language,
+				cast,
+				director,
+				trailerLink,
+				status,
+				rating,
+				posterLink,
+			}
+		);
+
+		return res.status(200).json(`Successfully updated ${title}!`);
+	} catch (error) {
+		console.log(error);
+
+		return res.status(504).json(`Unable to update movie.`);
 	}
 });
 
