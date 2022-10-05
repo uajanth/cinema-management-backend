@@ -23,6 +23,23 @@ router.get("/", async (req, res) => {
 	}
 });
 
+// GET upcoming movies from database
+router.get("/upcoming", async (req, res) => {
+	try {
+		const movies = await Movie.find({ status: "upcoming" });
+		if (movies.length < 1) {
+			return res.status(200).json("No upcoming movies Found");
+		}
+		return res.status(200).json(movies);
+	} catch (error) {
+		console.log(error);
+
+		return res
+			.status(504)
+			.json("Unable to retrieve upcoming movies from the database.");
+	}
+});
+
 // GET movie(s) from database with ID
 router.get("/id/:id", async (req, res) => {
 	let { id } = req.params;
