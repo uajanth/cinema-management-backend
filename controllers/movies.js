@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 // GET upcoming movies from database
 router.get("/upcoming", async (req, res) => {
 	try {
-		const movies = await Movie.find({ status: "upcoming" });
+		const movies = await Movie.find({ status: "upcoming" }); //
 		if (movies.length < 1) {
 			return res.status(200).json("No upcoming movies Found");
 		}
