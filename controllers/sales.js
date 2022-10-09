@@ -52,10 +52,10 @@ router.post("/", (req, res) => {
 	"calcOfTicket2": calcOfTicket2,
 	"ticketType3": `${ticketType3.name}`,
 	"calcOfTicket3": calcOfTicket3,
-  "bookingFee": `${orderSummary.bookingFee}`,
-	"subtotal": `${orderSummary.subtotal}`,
-	"tax": `${orderSummary.taxes}`,
-	"total": `${orderSummary.total}`,
+  "bookingFee": `$${orderSummary.bookingFee}`,
+	"subtotal": `$${orderSummary.subtotal}`,
+	"tax": `$${orderSummary.taxes}`,
+	"total": `$${orderSummary.total}`,
 };
 
 	const message = {
