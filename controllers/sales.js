@@ -71,13 +71,13 @@ router.post("/", (req, res) => {
 		],
 		from: {
 			email: "contact@ajanth.dev",
-			name: "Woodside Cinemas (Demo)",
+			name: "tickets-noreply@woodsidecinemas.com",
 		},
 		replyTo: {
 			email: "contact@ajanth.dev",
 			name: "Woodside Cinemas Customer Service Team",
 		},
-		subject: "Woodside Cinemas Order Confirmation -", // make custom
+		subject: "Woodside Booking Confirmation ", // make custom
 		template_id: "d-0c9197583bce4e57a77d90e9296571a4",
 	};
 
