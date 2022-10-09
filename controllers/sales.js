@@ -66,7 +66,9 @@ router.post("/", (req, res) => {
 		.catch((error) => {
 			console.error(error);
 		});
-	return res.status(200).json("Successfully sent email");
+	return res
+		.status(200)
+		.json(`Successfully sent email confirmation to ${emailAddress}`);
 });
 
 module.exports = router;
