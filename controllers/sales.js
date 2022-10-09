@@ -5,16 +5,27 @@ const router = express.Router();
 
 client.setApiKey(process.env.SENDGRID_API_KEY);
 
-// prettier-ignore
-const testData = {
-	"title": "Test",
-	"date": "October, 5 2022",
-	"time": "11:59PM",
-	"theatre": "1",
-	"numberOfTickets": "2",
-	"selectedSeats": "A1",
-	"posterUrl":
-		"https://cms-uajanth.vercel.app/_next/image?url=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FM%2FMV5BNmQyOTNmY2UtZTBhNi00NzNlLWIxOWEtYzhkODVkZWYwZGY5XkEyXkFqcGdeQXVyMTEzNzg0Mjkx._V1_Ratio0.6762_AL_.jpg&w=384&q=75",
+router.post("/", (req, res) => {
+	const {
+		emailAddress,
+		posterLink,
+		movieTitle,
+		showDate,
+		startTime,
+		theatre,
+		totalTickets,
+		selectedSeats,
+	} = req.body;
+
+	// prettier-ignore
+	const data = {
+	"title": `${movieTitle}`,
+	"date": `${showDate}`,
+	"time": `${startTime}`,
+	"theatre": `${theatre}`,
+	"numberOfTickets": `${totalTickets}`,
+	"selectedSeats": `${selectedSeats}`,
+	"posterUrl": `${posterLink}`,
 	"ticketType1": "General",
 	"calcOfTicket1": "2",
 	"ticketType2": "Child",
@@ -26,30 +37,29 @@ const testData = {
 	"total": "26",
 };
 
-const message = {
-	personalizations: [
-		{
-			dynamic_template_data: testData,
-			to: [
-				{
-					email: "uthayakumaran.ajanth@gmail.com",
-				},
-			],
+	const message = {
+		personalizations: [
+			{
+				dynamic_template_data: data,
+				to: [
+					{
+						email: emailAddress,
+					},
+				],
+			},
+		],
+		from: {
+			email: "contact@ajanth.dev",
+			name: "Woodside Cinemas (Demo)",
 		},
-	],
-	from: {
-		email: "contact@ajanth.dev",
-		name: "Woodside Cinemas (Demo)",
-	},
-	replyTo: {
-		email: "contact@ajanth.dev",
-		name: "Woodside Cinemas Customer Service Team",
-	},
-	subject: "Woodside Cinemas Order Confirmation -", // make custom
-	template_id: "d-0c9197583bce4e57a77d90e9296571a4",
-};
+		replyTo: {
+			email: "contact@ajanth.dev",
+			name: "Woodside Cinemas Customer Service Team",
+		},
+		subject: "Woodside Cinemas Order Confirmation -", // make custom
+		template_id: "d-0c9197583bce4e57a77d90e9296571a4",
+	};
 
-router.get("/", (req, res) => {
 	client
 		.send(message)
 		.then(() => console.log("Mail sent successfully"))
