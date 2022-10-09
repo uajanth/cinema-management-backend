@@ -55,7 +55,7 @@ router.post("/", async (req, res) => {
 
 		// By default connects to http://localhost://6379
 		await redisClient.hSet(sessionId, "showId", showId);
-		await redisClient.hSet(sessionId, "email", false);
+		await redisClient.hSet(sessionId, "email", "");
 		await redisClient.hSet(sessionId, "totalTickets", 0);
 		await redisClient.hSet(sessionId, "ticketsByGroup", "[]");
 		await redisClient.hSet(sessionId, "seatsSelected", "[]");
