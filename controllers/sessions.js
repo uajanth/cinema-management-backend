@@ -55,6 +55,7 @@ router.post("/", async (req, res) => {
 
 		// By default connects to http://localhost://6379
 		await redisClient.hSet(sessionId, "showId", showId);
+		await redisClient.hSet(sessionId, "email", false);
 		await redisClient.hSet(sessionId, "totalTickets", 0);
 		await redisClient.hSet(sessionId, "ticketsByGroup", "[]");
 		await redisClient.hSet(sessionId, "seatsSelected", "[]");
@@ -76,12 +77,21 @@ router.post("/", async (req, res) => {
 
 // PUT update a session info
 router.put("/id", async (req, res) => {
-	const { id, totalTickets, ticketsByGroup, seatsSelected, checkoutStep } =
-		req.body;
+	const {
+		id,
+		email,
+		totalTickets,
+		ticketsByGroup,
+		seatsSelected,
+		checkoutStep,
+	} = req.body;
 
 	try {
 		if (totalTickets != "false") {
 			await redisClient.hSet(id, "totalTickets", totalTickets);
+		}
+		if (email != "false") {
+			await redisClient.hSet(id, "email", email);
 		}
 		if (ticketsByGroup != "false") {
 			await redisClient.hSet(id, "ticketsByGroup", ticketsByGroup);

@@ -7,6 +7,7 @@ require("dotenv").config();
 
 // Other Imports
 const movies = require("./controllers/movies");
+const sales = require("./controllers/sales");
 const shows = require("./controllers/shows");
 const sessions = require("./controllers/sessions");
 const theatres = require("./controllers/theatres");
@@ -26,6 +27,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/movies", movies);
+
+app.use("/sales", sales);
 
 app.use("/shows", shows);
 

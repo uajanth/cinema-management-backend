@@ -112,10 +112,12 @@ router.put("/id", async (req, res) => {
 router.post("/", async (req, res) => {
 	const {
 		title,
+		summary,
 		language,
 		cast,
 		director,
 		trailerLink,
+		releaseDate,
 		status,
 		rating,
 		runtime,
@@ -126,10 +128,12 @@ router.post("/", async (req, res) => {
 	try {
 		const movie = new Movie({
 			title,
+			summary,
 			language,
 			cast,
 			director,
 			trailerLink,
+			releaseDate,
 			status,
 			rating,
 			runtime,
