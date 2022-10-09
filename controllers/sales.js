@@ -15,7 +15,27 @@ router.post("/", (req, res) => {
 		theatre,
 		totalTickets,
 		selectedSeats,
+		ticketsByGroup,
+		orderBreakdown,
 	} = req.body;
+
+	const ticketType1 = JSON.parse(ticketsByGroup)[0];
+	const ticketType2 = JSON.parse(ticketsByGroup)[1];
+	const ticketType3 = JSON.parse(ticketsByGroup)[2];
+
+	const calcOfTicket1 = `${ticketType1.quantity} x $${ticketType1.price} = $${
+		Number(ticketType1.price) * Number(ticketType1.quantity)
+	}`;
+
+	const calcOfTicket2 = `${ticketType2.quantity} x $${ticketType2.price} = $${
+		Number(ticketType2.price) * Number(ticketType2.quantity)
+	}`;
+
+	const calcOfTicket3 = `${ticketType3.quantity} x $${ticketType3.price} = $${
+		Number(ticketType3.price) * Number(ticketType3.quantity)
+	}`;
+
+	const orderSummary = JSON.parse(orderBreakdown);
 
 	// prettier-ignore
 	const data = {
@@ -26,15 +46,16 @@ router.post("/", (req, res) => {
 	"numberOfTickets": `${totalTickets}`,
 	"selectedSeats": `${selectedSeats}`,
 	"posterUrl": `${posterLink}`,
-	"ticketType1": "General",
-	"calcOfTicket1": "2",
-	"ticketType2": "Child",
-	"calcOfTicket2": "2",
-	"ticketType3": "Senior",
-	"calcOfTicket3": "2",
-	"subtotal": "24.99",
-	"tax": "1.01",
-	"total": "26",
+	"ticketType1": `${ticketType1.name}`,
+	"calcOfTicket1": calcOfTicket1,
+	"ticketType2": `${ticketType2.name}`,
+	"calcOfTicket2": calcOfTicket2,
+	"ticketType3": `${ticketType3.name}`,
+	"calcOfTicket3": calcOfTicket3,
+  "bookingFee": `${orderSummary.bookingFee}`,
+	"subtotal": `${orderSummary.subtotal}`,
+	"tax": `${orderSummary.taxes}`,
+	"total": `${orderSummary.total}`,
 };
 
 	const message = {
