@@ -7,6 +7,7 @@ require("dotenv").config();
 
 // Other Imports
 const movies = require("./controllers/movies");
+const purchase = require("./controllers/purchase");
 const sales = require("./controllers/sales");
 const shows = require("./controllers/shows");
 const sessions = require("./controllers/sessions");
@@ -15,6 +16,7 @@ const theatres = require("./controllers/theatres");
 // Middleware
 app.use(express.json()); // Bodyparser
 app.use(cors());
+app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
 
@@ -27,6 +29,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/movies", movies);
+
+app.use("/purchase", purchase);
 
 app.use("/sales", sales);
 

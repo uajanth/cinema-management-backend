@@ -41,7 +41,6 @@ router.get("/id/:id/theatre", async (req, res) => {
 	const { id } = req.params;
 	try {
 		const theatre = await Show.find({ _id: id }, "theatre");
-		console.log(theatre);
 		return res.status(200).json(theatre);
 	} catch (error) {
 		return res.status(504).send(`No theatre found for show.`);
