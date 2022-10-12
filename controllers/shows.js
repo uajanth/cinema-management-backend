@@ -160,8 +160,60 @@ router.post("/", async (req, res) => {
 
 // POST update a seat to a show,
 // next step is to check if the seat is already available
+router.get("/seat/:id/:seatId", async (req, res) => {
+	const { id, seatId } = req.params;
+	try {
+		const seatRow = seatId[0];
+
+		// Aggregation Pipeline to split theatre into documents for each row
+		const rows = await Show.aggregate([
+			{
+				$match: {
+					_id: mongoose.Types.ObjectId(id),
+				},
+			},
+		])
+			.unwind({
+				path: "$theatre.rows",
+			})
+			.exec();
+
+		// Row
+		const matchingRow = [];
+
+		rows.forEach((row, index) => {
+			if (row.theatre.rows.name === seatRow) {
+				matchingRow.push(Object.assign({}, row, { index }));
+			}
+		});
+
+		const rowIndex = matchingRow[0].index;
+
+		// Seat
+		const seats = matchingRow[0].theatre.rows.seats;
+
+		const matchingSeat = seats.filter((seat) => seat.label === seatId);
+
+		const seatIndex = matchingSeat[0].index;
+
+		const show = await Show.findById({ _id: id });
+		const seatStatus = show.theatre.rows[rowIndex].seats[seatIndex].status;
+
+		if (seatStatus === "available") {
+			return res.status(200).json(true);
+		} else {
+			return res.status(200).json(false);
+		}
+	} catch (error) {
+		console.log(error);
+		return res.status(504).json(`Unable to retrieve seat status`);
+	}
+});
+
 router.put("/seat", async (req, res) => {
 	const { id, seatId } = req.body;
+	console.log({ id, seatId });
+
 	try {
 		const seatRow = seatId[0];
 
