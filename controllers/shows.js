@@ -212,7 +212,6 @@ router.get("/seat/:id/:seatId", async (req, res) => {
 
 router.put("/seat", async (req, res) => {
 	const { id, seatId } = req.body;
-	console.log({ id, seatId });
 
 	try {
 		const seatRow = seatId[0];
